@@ -110,8 +110,6 @@ public class TelaJogo extends JFrame{
 		// Metodos do objeto JFrame, usados no final do Construtor
 		// para garantir que os novos componentes incluídos apareçam de forma correta
 		this.setVisible(true);
-		this.repaint();	
-	
-	}	
-
+		this.repaint();		
+	}
 }

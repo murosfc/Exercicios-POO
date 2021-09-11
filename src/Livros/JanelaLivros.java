@@ -18,6 +18,8 @@ import javax.swing.SwingConstants;
 
 public class JanelaLivros extends JFrame{	
 	public int ultimaConsulta=0;
+	public int lastLivro=-1;
+	
 	//método contrutor
 	public JanelaLivros()
 	{
@@ -69,8 +71,7 @@ public class JanelaLivros extends JFrame{
 		painel.add(listaLivros);
 		listaLivros.setVisible(false);
 		
-		final Livro ObjLivro = new Livro();
-		
+		Livro[] Livros = new Livro[200];		
 		
 		adiciona.addActionListener(new ActionListener() {
 
@@ -78,36 +79,38 @@ public class JanelaLivros extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				msgErroSucesso.setVisible(true);
 				listaLivros.setVisible(false);
-				msgLista.setVisible(false);	
+				msgLista.setVisible(false);								
 				if (validaEntrada(nomeLivro.getText(), pagLivro.getText()))
 				{
-					ObjLivro.addLivro(nomeLivro.getText(), Integer.parseInt(pagLivro.getText()));
-					msgErroSucesso.setText("Livro "+ObjLivro.getLivros(ObjLivro.getIndice())+ " adicionado com sucesso");
-					msgErroSucesso.setForeground(Color.blue);
+					lastLivro ++;
+					Livros[lastLivro]= new Livro(nomeLivro.getText(), Integer.parseInt(pagLivro.getText()));
+					msgErroSucesso.setText("Livro "+Livros[lastLivro].getLivros()+ " adicionado com sucesso");
+					msgErroSucesso.setForeground(Color.blue);					
 				}
 				else
 				{
 					msgErroSucesso.setText("<html>Para inserir um livro ambas informações de título e número páginas<br>precisam estar preenchidas, ou você não digitou um número válido<br>para a quantidade de páginas</html>");
 					msgErroSucesso.setForeground(Color.red);					
-				}
-				
+				}				
 			}});	
 		
 		lista.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int i;				
-				msgErroSucesso.setVisible(false);
-				msgLista.setVisible(true);	
-				for (i=ultimaConsulta;i<=ObjLivro.getIndice();i++)
+				if (lastLivro >= 0)
 				{
-					relacao.addElement(ObjLivro.getLivros(i));					
-				}
-				ultimaConsulta=i;
-				listaLivros.setVisible(true);
-				listaLivros.setVisibleRowCount(10);
-				
+					int i;				
+					msgErroSucesso.setVisible(false);
+					msgLista.setVisible(true);	
+					for (i=ultimaConsulta;i<=lastLivro;i++)
+					{
+						relacao.addElement(Livros[i].getLivros());					
+					}
+					ultimaConsulta=i;
+					listaLivros.setVisible(true);
+					listaLivros.setVisibleRowCount(10);
+				}								
 			}});
 		
 		//Fundamentais para funcionamento

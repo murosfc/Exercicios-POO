@@ -1,6 +1,6 @@
 package Adivinhe;
 
-public class Jogo {
+public class TesteJogo {
 
 	public static void main(String[] args) {
 	
