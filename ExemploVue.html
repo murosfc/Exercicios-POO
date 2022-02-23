@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Exemplo 0x</title>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id='app'>
+        Nome: <input type='text' v-model='aluno.nome'>
+        Nota: <input type='number' step="0.01" min="0" v-model='aluno.nota'>
+     
+        <button v-on:click="insere()">Insere</button>
+        <br>
+        <br>
+        <table border="1">
+            <tr>
+                <th>Nome</th>
+                <th>Nota</th>
+		<th>Excluir</th>
+            </tr>
+            <tr v-for="a in alunos">                                             
+                <td>{{a.nome}}</td>
+                <td>{{a.nota}}</td>
+                <td><button v-on:click="remove(a)">excluir</button></td>
+            </tr>
+        </table>
+
+    </div>
+
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            mensagem: 'Digite o nome do aluno: ',            
+            aluno: {                                                     
+                nome: '',
+                nota: 0
+            },
+            alunos: [
+            ],
+        },
+        methods: {
+            insere() { 
+                if (this.aluno.nome != "") {
+                    this.alunos.push(Object.assign({}, this.aluno));                             
+                    this.aluno.nome ='';
+                    this.aluno.nota =0;
+                }else{
+                    alert("Insira o nome do aluno para adicionar");
+                }         
+            },
+            remove (alunoRemover) {
+                let indice = this.alunos.indexOf(alunoRemover);
+                console.log("Indice remover = "+ indice);                
+                this.$delete(this.alunos, indice);                  
+             },
+        }
+    })
+</script>
+</html>
